@@ -2,21 +2,30 @@ from pip import parseopts
 from pip.commands.search import SearchCommand
 
 from traits.api import HasTraits, List, Str
-from traitsui.api import Group, Item, View
+from traitsui.api import CheckListEditor, Group, UItem, View
 
 
 class SearchList(HasTraits):
     search_results_list = List(Str, ["No results to display"])
 
-    list_group = Group(
-        Item('_'),
-        Item('search_results_list', style='readonly'),
-        Item('_'),
+    # FIXME : haven't figured out how to scroll through the checklist
+    # which is why we are using 6 cols to display the list/data
+    checklist = List(
+        editor=CheckListEditor(
+            name='search_results_list',
+            cols=6,
+        )
+    )
+
+    checklist_group = Group(
+        '10',
+        UItem('checklist', style='custom'),
+        '_', '10',
     )
 
     view = View(
-        list_group,
-        title='ListEditor',
+        checklist_group,
+        title='CheckListEditor',
         buttons=['OK'],
         resizable=True,
     )
