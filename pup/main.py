@@ -7,12 +7,12 @@ class MainOptionsWindow(HasTraits):
     search_pkgs = Button('Search pkgs')
     
     def _list_pkgs_fired(self):
-        from list_pkgs import main
-        main()
+        from list_pkgs import InstalledPkgsList
+        InstalledPkgsList().main()
 
     def _search_pkgs_fired(self):
-        from search import main
-        main()
+        from search import SearchList
+        SearchList().main()
 
     traits_view = View(
         'list_pkgs',

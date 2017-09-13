@@ -30,21 +30,20 @@ class SearchList(HasTraits):
         resizable=True,
     )
 
+    def main(self):
+        search = SearchCommand()
+        _, cmd_args = parseopts(['search', 'numpy'])
+        opts, args = search.parse_args(cmd_args)
 
-def main():
-    search = SearchCommand()
-    _, cmd_args = parseopts(['search', 'numpy'])
-    opts, args = search.parse_args(cmd_args)
+        results = search.search(args, opts)
+        results_list = [
+            "{}: {}".format(result['name'], result['version'])
+            for result in results
+        ]
 
-    results = search.search(args, opts)
-    results_list = [
-        "{}: {}".format(result['name'], result['version'])
-        for result in results
-    ]
-
-    search_list = SearchList(search_results_list=results_list)
-    search_list.configure_traits()
+        self.search_results_list=results_list
+        self.configure_traits()
 
 
 if __name__ == "__main__":
-    main()
+    SearchList().main()

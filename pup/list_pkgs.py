@@ -22,24 +22,23 @@ class InstalledPkgsList(HasTraits):
         resizable=True,
     )
 
+    def main(self):
+        cmd_name, cmd_args = parseopts(['list'])
+        list_ = ListCommand()
+        opts, args = list_.parse_args(cmd_args)
 
-def main():
-    cmd_name, cmd_args = parseopts(['list'])
-    list_ = ListCommand()
-    opts, args = list_.parse_args(cmd_args)
+        pkgs = get_installed_distributions(
+            local_only=opts.local,
+            user_only=opts.user,
+            editables_only=opts.editable
+        )
 
-    pkgs = get_installed_distributions(
-        local_only=opts.local,
-        user_only=opts.user,
-        editables_only=opts.editable
-    )
-
-    # FIXME : hack for the moment
-    # figure out how to use ListCommand.output_package_listing_*
-    pkgs = [pkg.__str__() for pkg in pkgs]
-    pkg_list = InstalledPkgsList(results_list = list(pkgs))
-    pkg_list.configure_traits()
+        # FIXME : hack for the moment
+        # figure out how to use ListCommand.output_package_listing_*
+        pkgs = [pkg.__str__() for pkg in pkgs]
+        self.results_list = list(pkgs)
+        self.configure_traits()
     
 
 if __name__ == "__main__":
-    main()
+    InstalledPkgsList().list()
