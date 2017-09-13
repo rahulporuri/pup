@@ -31,7 +31,7 @@ class SearchList(HasTraits):
     )
 
 
-if __name__ == "__main__":
+def main():
     search = SearchCommand()
     _, cmd_args = parseopts(['search', 'numpy'])
     opts, args = search.parse_args(cmd_args)
@@ -44,3 +44,7 @@ if __name__ == "__main__":
 
     search_list = SearchList(search_results_list=results_list)
     search_list.configure_traits()
+
+
+if __name__ == "__main__":
+    main()

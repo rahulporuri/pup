@@ -23,7 +23,7 @@ class InstalledPkgsList(HasTraits):
     )
 
 
-if __name__ == "__main__":
+def main():
     cmd_name, cmd_args = parseopts(['list'])
     list_ = ListCommand()
     opts, args = list_.parse_args(cmd_args)
@@ -39,3 +39,7 @@ if __name__ == "__main__":
     pkgs = [pkg.__str__() for pkg in pkgs]
     pkg_list = InstalledPkgsList(results_list = list(pkgs))
     pkg_list.configure_traits()
+    
+
+if __name__ == "__main__":
+    main()
